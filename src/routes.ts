@@ -8,7 +8,7 @@ import { createTicketHandler } from './controller/ticket.controller';
 import { createTokenHandler } from './controller/token.controller';
 import validateRequest from './middleware/validateRequest';
 const roll = require('./middleware/roll');
-const auth= require("./middleware/aut")
+const auth = require('./middleware/auth');
 const userSchema = createUserSchema as any;
 const userTokenSchema = createUserTokenSchema as any;
 const ticketSchema = createTicketSchema as any;
@@ -25,5 +25,9 @@ export default function (app: Express) {
   );
   app.get('/api/test', auth, () => console.log('here'));
 
-  app.post('/api/ticket',[validateRequest(ticketSchema) ,auth,roll], createTicketHandler);
+  app.post(
+    '/api/ticket',
+    [validateRequest(ticketSchema), auth, roll],
+    createTicketHandler,
+  );
 }
