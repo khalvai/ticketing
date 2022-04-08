@@ -1,29 +1,50 @@
-import { Express, Request, Response } from 'express';
-import mongoose from 'mongoose';
+import { Express } from 'express';
 import createUserSchema, { createUserTokenSchema } from './schema/user.schema';
 import createTicketSchema from './schema/ticket.schema';
 
-import { createUserHandler } from './controller/user.controller';
-import { createTicketHandler } from './controller/ticket.controller';
-import { createTokenHandler } from './controller/token.controller';
+import {
+  createUserHandler,
+  logInUserHandler,
+} from './controller/user.controller';
+import {
+  createTicketHandler,
+  getAllResivedTicketHandler,deleteTicketHandler
+} from './controller/ticket.controller';
 import validateRequest from './middleware/validateRequest';
-const roll = require('./middleware/roll');
-const auth= require("./middleware/aut")
+
+// importing  middleware  for authanticating
+import auth from './middleware/auth';
+import roll from './middleware/roll';
+import allowedTicketing from './middleware/allowedTicketing';
+
+// schemas for validating inputs
 const userSchema = createUserSchema as any;
 const userTokenSchema = createUserTokenSchema as any;
 const ticketSchema = createTicketSchema as any;
+
+// routes
+
 export default function (app: Express) {
   // sign in user
   app.post('/api/user', validateRequest(userSchema), createUserHandler);
 
-  //logs in user
+  //log in user
 
   app.post(
     '/api/user/login',
     validateRequest(userTokenSchema),
-    createTokenHandler,
+    logInUserHandler,
   );
-  app.get('/api/test', auth, () => console.log('here'));
 
-  app.post('/api/ticket',[validateRequest(ticketSchema) ,auth,roll], createTicketHandler);
+  //creating a ticket
+  app.post(
+    '/api/ticket',
+    [validateRequest(ticketSchema), auth, allowedTicketing],
+    createTicketHandler,
+  );
+
+  //geting all thickets sent for me
+
+  app.get('/api/ticket', auth, getAllResivedTicketHandler);
+  app.delete('/api/ticket/:id',auth,deleteTicketHandler)
 }

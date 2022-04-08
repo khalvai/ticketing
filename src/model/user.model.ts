@@ -4,9 +4,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export interface UserDocument extends mongoose.Document {
+  id:mongoose.Types.ObjectId;
   name: string;
   password: string;
   email: string;
+  isAdmin: Boolean;
   comparePassword(condidatePassword: string): Promise<Boolean>;
 }
 const UserSchema = new mongoose.Schema(
@@ -14,7 +16,7 @@ const UserSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, minlength: 5, maxlength: 20, required: true },
-    isAdmin:{type:Boolean,default:false}
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

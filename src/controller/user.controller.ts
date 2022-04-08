@@ -1,22 +1,39 @@
 import {
   createUser,
   validatePassword,
-  findUser,
+  findUserByEmail,
 } from '../service/user.service';
 import express, { NextFunction, Request, Response, Router } from 'express';
 import { omit } from 'lodash';
 import log from '../logger/index';
+import { creatToken } from '../controller/token.controller';
 
 export async function createUserHandler(req: Request, res: Response) {
   try {
     const user = await createUser(req.body);
-    res.send(omit(user.toJSON(), 'password'));
+    const { _id: id, isAdmin } = user;
+    const token = await creatToken({ id, isAdmin });
+    res.send({ user: omit(user, 'password'), token: token });
   } catch (error: any) {
     res.status(400).send(error.message);
   }
 }
-export async function getUserHandler(req: Request, res: Response) {
-  const email = req.body.email as string;
-  const user = await findUser(email);
-}
+export async function logInUserHandler(req: Request, res: Response) {
 
+  const { email, password: candidatePassword } = req.body;
+  
+  const user = await findUserByEmail(email);
+  
+  if (!user) return res.status(404).send('invalid email or password');
+  
+  const isValidPassword = validatePassword(user, candidatePassword);
+
+  if (!isValidPassword)
+    return res.status(403).send('invalid email or password');
+
+  const { _id: id, isAdmin } = user;
+
+  const token = await creatToken({ id, isAdmin });
+  
+  res.send({ user: omit(user, 'password'), token: token });
+}

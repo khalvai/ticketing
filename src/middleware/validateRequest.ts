@@ -8,7 +8,6 @@ const validate =
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.validate(req.body);
-
       return next();
     } catch (e: any) {
       log.error(e);
