@@ -8,7 +8,8 @@ import {
 } from './controller/user.controller';
 import {
   createTicketHandler,
-  getAllResivedTicketHandler,deleteTicketHandler
+  getAllResivedTicketHandler,
+  deleteTicketHandler,
 } from './controller/ticket.controller';
 import validateRequest from './middleware/validateRequest';
 
@@ -18,6 +19,7 @@ import roll from './middleware/roll';
 import allowedTicketing from './middleware/allowedTicketing';
 
 // schemas for validating inputs
+
 const userSchema = createUserSchema as any;
 const userTokenSchema = createUserTokenSchema as any;
 const ticketSchema = createTicketSchema as any;
@@ -46,5 +48,5 @@ export default function (app: Express) {
   //geting all thickets sent for me
 
   app.get('/api/ticket', auth, getAllResivedTicketHandler);
-  app.delete('/api/ticket/:id',auth,deleteTicketHandler)
+  app.delete('/api/ticket/:id', auth, deleteTicketHandler);
 }

@@ -2,6 +2,7 @@ import mongoose, { ObjectId } from 'mongoose';
 const { ObjectId } = mongoose.Schema.Types;
 
 export interface TicketDocument extends mongoose.Document {
+  id: ObjectId;
   message: string;
   resiverId: ObjectId;
   senderId: ObjectId;
