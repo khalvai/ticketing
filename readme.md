@@ -3,8 +3,8 @@
 ## this project is a simplfy of these features:
 
 - signing in a user 
-- a user can signin by an email jsut once
-- login in by password and email
+- a user can sign in by an email jsut once
+- log in in by password and email
 - authantication and authorization 
 - a simple user can make just one ticket and has permission to delete that 
 - admins can response thier tickets mulitple times (unlimited)
