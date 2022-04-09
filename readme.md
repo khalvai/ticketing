@@ -10,5 +10,5 @@
 - admins can response thier tickets mulitple times (unlimited)
 - admins have permission to delete user's ticket
 - every one can see the tickets sent to them by the received Id mentioned in the ticket
-- and token has a expire t
+- and token has a expire time
 
