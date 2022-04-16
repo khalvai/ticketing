@@ -9,7 +9,7 @@ const jwtPrivateKey = process.env.jwtPrivateKey;
 
 async function auth(req: UserInRequest, res: Response, next: NextFunction) {
   const token = req.headers['x-access-token'] || req.body.token;
-  if (!token) res.status(403).send('a token is requierd for authantication');
+  if (!token) return res.status(403).send('a token is requierd for authantication');
   try {
     const decode = await jwt.verify(token, jwtPrivateKey as Secret);
 
