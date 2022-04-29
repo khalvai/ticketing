@@ -1,7 +1,6 @@
 import { AnySchema } from 'yup';
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import log from '../logger';
 
 const validate =
   (schema: AnySchema) =>
@@ -10,7 +9,7 @@ const validate =
       await schema.validate(req.body);
       return next();
     } catch (e: any) {
-      log.error(e);
+      console.error(e);
       return res.status(400).send(e.message);
     }
   };

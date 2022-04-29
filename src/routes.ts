@@ -27,6 +27,7 @@ const ticketSchema = createTicketSchema as any;
 // routes
 
 export default function (app: Express) {
+  app.get('/', () => console.log('hey there??/'));
   // sign in user
   app.post('/api/user', validateRequest(userSchema), createUserHandler);
 

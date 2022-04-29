@@ -1,6 +1,5 @@
 import exp from 'constants';
 import mongoose from 'mongoose';
-import log from '../logger';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -9,10 +8,10 @@ function connect() {
   mongoose
     .connect(dbUrl)
     .then(() => {
-      log.info('successfuly connected to database...');
+   console.log('successfuly connected to database...');
     })
     .catch((er) => {
-      log.error(er);
+      console.error(er);
       process.exit(1);
     });
 }

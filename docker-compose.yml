@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  backend:
+    depends_on:
+      - database 
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+
+  database:
+    image: mongo:4.0-xenial
+    ports:
+      - 27019:27017
+    volumes:
+      - ticketing:/data/database
+
+volumes:
+  ticketing :      

@@ -1,8 +1,6 @@
 import { DocumentDefinition, FilterQuery } from 'mongoose';
 import User, { UserDocument } from '../model/user.model';
-import { omit } from 'lodash';
-import exp from 'constants';
-import { UrlWithStringQuery } from 'url';
+
 
 export async function createUser(input: DocumentDefinition<UserDocument>) {
   try {
